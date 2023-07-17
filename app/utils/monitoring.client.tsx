@@ -1,6 +1,6 @@
-import { useLocation, useMatches } from "@remix-run/react";
-import * as Sentry from "@sentry/remix";
 import { useEffect } from "react";
+import * as Sentry from "@sentry/remix";
+import { useLocation, useMatches } from "@remix-run/react";
 
 export function init() {
     Sentry.init({
@@ -10,7 +10,7 @@ export function init() {
                 routingInstrumentation: Sentry.remixRouterInstrumentation(
                     useEffect,
                     useLocation,
-                    useMatches
+                    useMatches,
                 ),
             }),
             // Replay is only available in the client

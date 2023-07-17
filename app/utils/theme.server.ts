@@ -1,7 +1,6 @@
-import { createCookieSessionStorage } from "@remix-run/node";
-
 import { isTheme } from "~/components/theme.provider";
 import type { Theme } from "~/components/theme.provider";
+import { createCookieSessionStorage } from "@remix-run/node";
 
 const sessionSecret = "s3cret";
 
@@ -18,7 +17,7 @@ const themeStorage = createCookieSessionStorage({
 
 async function getThemeSession(request: Request) {
     const session = await themeStorage.getSession(
-        request.headers.get("Cookie")
+        request.headers.get("Cookie"),
     );
     return {
         getTheme: () => {

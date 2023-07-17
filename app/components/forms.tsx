@@ -48,7 +48,11 @@ export function Field({
                 htmlFor={id}
                 {...labelProps}
                 className={`${labelProps.className} 
-                    ${errors?.filter(Boolean).length ? "text-red-900" : ""}
+                    ${
+                        errors?.filter(Boolean).length
+                            ? "text-red-900 dark:text-white"
+                            : ""
+                    }
                 `}
             />
             <Input
@@ -59,12 +63,12 @@ export function Field({
                 className={`${labelProps.className} 
                     ${
                         errors?.filter(Boolean).length
-                            ? "border-red-900 text-red-900"
+                            ? "border-red-900 text-red-900 dark:border-white dark:text-white"
                             : ""
                     }
                 `}
             />
-            <div className="min-h-[32px] pb-3 pt-1 font-medium text-red-900">
+            <div className="pt-1 font-medium text-red-900 dark:text-white">
                 {errorId ? <ErrorList id={errorId} errors={errors} /> : null}
             </div>
         </div>

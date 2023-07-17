@@ -1,5 +1,12 @@
-import { cssBundleHref } from "@remix-run/css-bundle";
+import clsx from "clsx";
 import { json } from "@remix-run/node";
+import { cssBundleHref } from "@remix-run/css-bundle";
+import type { LinksFunction, LoaderFunction } from "@remix-run/node";
+import {
+    NonFlashOfWrongThemeEls,
+    ThemeProvider,
+    useTheme,
+} from "./components/theme.provider";
 import {
     Links,
     LiveReload,
@@ -9,20 +16,15 @@ import {
     ScrollRestoration,
     useLoaderData,
 } from "@remix-run/react";
+import { RemixDevTools } from "remix-development-tools";
 
-import tailwindStylesheetUrl from "./styles/tailwind.css";
 import { getThemeSession } from "./utils/theme.server";
-
-import type { LinksFunction, LoaderFunction } from "@remix-run/node";
-import {
-    NonFlashOfWrongThemeEls,
-    ThemeProvider,
-    useTheme,
-} from "./components/theme.provider";
-import clsx from "clsx";
+import tailwindStylesheetUrl from "./styles/tailwind.css";
+import rdtStylesheet from "remix-development-tools/stylesheet.css";
 
 export const links: LinksFunction = () => [
     ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
+    ...(rdtStylesheet ? [{ rel: "stylesheet", href: rdtStylesheet }] : []),
     { rel: "stylesheet", href: tailwindStylesheetUrl, as: "style" },
 ];
 

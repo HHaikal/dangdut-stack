@@ -1,7 +1,7 @@
-import { createCookieSessionStorage, redirect } from "@remix-run/node";
-import { randomUUID } from "crypto";
 import { z } from "zod";
+import { randomUUID } from "crypto";
 import type { ToastProps } from "~/components/ui/toast.tsx";
+import { createCookieSessionStorage, redirect } from "@remix-run/node";
 
 const FLASH_SESSION = "flash";
 
@@ -41,7 +41,7 @@ function getSessionFromRequest(request: Request) {
  */
 export async function flashMessage(
     flash: FlashSessionValues,
-    headers?: ResponseInit["headers"]
+    headers?: ResponseInit["headers"],
 ) {
     const session = await sessionStorage.getSession();
     session.flash(FLASH_SESSION, flash);
@@ -61,7 +61,7 @@ export async function flashMessage(
 export async function redirectWithFlash(
     url: string,
     flash: FlashSessionValues,
-    init?: ResponseInit
+    init?: ResponseInit,
 ) {
     return redirect(url, {
         ...init,
@@ -89,7 +89,7 @@ export function redirectWithConfetti(url: string, init?: ResponseInit) {
 export function redirectWithToast(
     url: string,
     toast: ToastMessage,
-    init?: ResponseInit
+    init?: ResponseInit,
 ) {
     return redirectWithFlash(url, { toast }, init);
 }
@@ -102,7 +102,7 @@ export function redirectWithToast(
 export async function getFlashSession(request: Request) {
     const session = await getSessionFromRequest(request);
     const result = flashSessionValuesSchema.safeParse(
-        session.get(FLASH_SESSION)
+        session.get(FLASH_SESSION),
     );
     const flash = result.success ? result.data : undefined;
     const headers = new Headers({

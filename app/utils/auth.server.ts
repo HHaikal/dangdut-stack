@@ -12,12 +12,12 @@ type IKey = {
 
 export type Policy<PolicyResult> = (
     request: Request,
-    callback: (props: PolicyResult) => any
+    callback: (props: PolicyResult) => any,
 ) => Promise<any>;
 
 export const authenticated: Policy<{ user: User; header: Headers }> = async (
     request,
-    callback
+    callback,
 ) => {
     // const result = await getProfile(request);
     // if (result.isLeft()) {
@@ -41,6 +41,16 @@ export const sessionShouldExist: Policy<any> = async (request, callback) => {
         return authenticator.logout(request, {
             redirectTo: `/signin?returnTo=${currentUrl}`,
         });
+    }
+};
+
+export const sessionShouldNotExist: Policy<any> = async (request, callback) => {
+    const session = await authenticator.isAuthenticated(request);
+
+    if (session) {
+        return redirect("/dashboard");
+    } else {
+        return callback({});
     }
 };
 
@@ -78,5 +88,5 @@ authenticator.use(
             expired_date: new Date().toISOString(),
         };
     }),
-    "user-pass"
+    "user-pass",
 );
